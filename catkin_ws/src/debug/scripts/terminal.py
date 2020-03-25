@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+#Kwinten Vanlathem
 import rospy
 from std_msgs.msg import String
 
