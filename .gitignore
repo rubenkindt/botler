@@ -1,3 +1,7 @@
 catkin_ws/build/
 catkin_ws/devel/
+<<<<<<< HEAD
 **/__pycache__/
+=======
+**/__pycache__
+>>>>>>> 37102b4aec95d533e890ebcc8133574c71b587b9
