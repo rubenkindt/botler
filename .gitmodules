@@ -1,0 +1,3 @@
+[submodule "catkin_ws/src/usb_cam"]
+	path = catkin_ws/src/usb_cam
+	url = https://github.com/ros-drivers/usb_cam.git
