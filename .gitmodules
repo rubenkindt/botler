@@ -10,3 +10,6 @@
 [submodule "catkin_ws/src/turtlebot3_simulations"]
 	path = catkin_ws/src/turtlebot3_simulations
 	url = https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+[submodule "catkin_ws/src/vision_opencv"]
+	path = catkin_ws/src/vision_opencv
+	url = https://github.com/ros-perception/vision_opencv.git
