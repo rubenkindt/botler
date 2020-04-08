@@ -14,15 +14,15 @@ class TemplateMatcher:
                 ]
         self.cnt_areas = [0, 0, 0, 0]
 
-    def templateMatch(self,frame = cv2.imread('dog.png') ):
+    def templateMatch(self,frame = cv2.imread('big_Duvel.png') ):
 
         duvel = cv2.imread('small_Duvel.png')
         omer = cv2.imread('small_Omer.png')
-        jupiler = cv2.imread('small_Jupiler.png')
+        #hoe = cv2.imread('small_Hoegaarden.png')
 
         duvel=cv2.cvtColor(duvel,cv2.COLOR_BGR2HSV)
         omer=cv2.cvtColor(omer,cv2.COLOR_BGR2HSV)
-        jupiler=cv2.cvtColor(omer,cv2.COLOR_BGR2HSV)
+        #hoe=cv2.cvtColor(hoe,cv2.COLOR_BGR2HSV)
 
         frame=cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
 
@@ -32,8 +32,6 @@ class TemplateMatcher:
             print("duvel template is none")
         if ( omer is None):
             print("omer template is none")
-        if ( jupiler is None):
-            print("jupiler template is none")
         templates=(duvel,omer)
 
         best_photo_nr=0 #see readme.md
