@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+
 import cv2
 import numpy as np
 import rospy
@@ -9,32 +10,46 @@ from cv_bridge import CvBridge, CvBridgeError
 
 class Detector:
     def __init__(self):
-        # The HSV defenition of a "cold" drink
-        self.cold_lower = np.array([90, 120, 30])
-        self.cold_upper = np.array([120, 255, 255])
+        # The HSV defenition of a "cold or hot" drink
+        self.color_boundries = [
+            	([0, 120, 30], [5, 255, 255], 2),          # "hot" low
+            	([160, 120, 30], [180, 255, 255], 2),      # "hot" high
+            	([90, 120, 30], [120, 255, 255], 1)]       # "cold"
 
     def detect_temp(self, frame):
+        c_largest_area = 0
+        c_largest = None
+        c_tem = None
+
         # Converting the BGR image to HSV
         img_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-        # Show only the cold bottle(s)
-        mask = cv2.inRange(img_hsv, self.cold_lower, self.cold_upper)
+        for (lower, upper, tem) in self.color_boundries:
+            # Create NumPy arrays from the boundaries
+            lower = np.array(lower, dtype = "uint8")
+            upper = np.array(upper, dtype = "uint8")
 
-        # Get the bottle(s) contours
-        contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+            # Find the colors within the specified boundaries and apply the mask
+            mask = cv2.inRange(img_hsv, lower, upper)
 
-        # If there are any contours (so if there are any cold bottles in the screen)
-        if len(contours) != 0:
-            # Find the biggest countour (c) by the area
-            c_max = max(contours, key = cv2.contourArea)
+            # Get the bottle(s) contours
+            contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-            # The largest contour has to have a minimum size
-            if (cv2.contourArea(c_max) > 1000):
-                # Get the bounding box information
-                x,y,w,h = cv2.boundingRect(c_max)
-                return (True, (x,y,w,h))
+            # If there are any contours (so if there are any cold or hot bottles in the screen)
+            if len(contours) != 0:
+                # Find the biggest countour (c) by the area
+                c_max = max(contours, key = cv2.contourArea)
 
-        return (False, (0,0,0,0))
+                # The largest contour has to have a minimum size
+                if (cv2.contourArea(c_max) > c_largest_area):
+                    c_largest_area = cv2.contourArea(c_max)
+                    c_largest = c_max
+                    c_tem = tem
+
+        if(c_largest_area > 1000):
+            return (cv2.boundingRect(c_largest), c_tem)
+        else:
+            return ((0,0,0,0), 0)
 
 class Thermal_detector:
 	def __init__(self):
@@ -45,10 +60,10 @@ class Thermal_detector:
 		self.image_sub = rospy.Subscriber('/usb_cam/image_raw', Image, self.callback)
 
 		# Create publisher to publish detection id
-		self.color_pub = rospy.Publisher('thermal_detector/det_id', String, queue_size = 1)
+		self.color_pub = rospy.Publisher('thermal_detector/detection_id', String, queue_size = 1)
 
         # Create publisher to publish bounding boxes
-		self.image_pub = rospy.Publisher("thermal_detector/cv_image", Image, queue_size=1)
+		self.image_pub = rospy.Publisher('thermal_detector/cv_image', Image, queue_size=1)
 
 		# Detector instance
 		self.detector = Detector()
@@ -61,7 +76,7 @@ class Thermal_detector:
 			print(e)
 
         # Detect the color (temperature) of the bottle in the image and place a bounding box around it.
-		temp_id, (x,y,w,h) = self.detector.detect_temp(cv_image)
+		(x,y,w,h), temp_id = self.detector.detect_temp(cv_image)
 
         # Publish the temperature id (0 = hot, 1 = cold)
 		self.color_pub.publish(str(temp_id))
