@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#https://docs.opencv.org/4.2.0/dc/dc3/tutorial_py_matcher.html
+#https://docs.opencv.org/4.2.0/d1/de0/tutorial_py_feature_homography.html
 import cv2
 import copy
 import matplotlib.pyplot as plt
@@ -8,8 +8,11 @@ import numpy as np
 class TemplateMatcher:
     def __init__(self):
 
-        self.orb = cv2.ORB_create()
-        self.bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+        self.sift = cv2.xfeatures2d.SIFT_create()
+        FLANN_INDEX_KDTREE = 1
+        index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
+        search_params = dict(checks = 50)
+        self.flann = cv2.FlannBasedMatcher(index_params, search_params)
 
 
         dir = "src/template_matcher/script/pics/"
@@ -30,9 +33,9 @@ class TemplateMatcher:
         self.omer=cv2.cvtColor(self.omer, cv2.COLOR_BGR2GRAY)
         self.hoe=cv2.cvtColor(self.hoe, cv2.COLOR_BGR2GRAY)
 
-        _,self.des_duvel= self.orb.detectAndCompute(self.duvel, None)
-        _,self.des_omer= self.orb.detectAndCompute(self.omer, None)
-        _,self.des_hoe= self.orb.detectAndCompute(self.hoe, None)
+        _,self.des_duvel= self.sift.detectAndCompute(self.duvel, None)
+        _,self.des_omer= self.sift.detectAndCompute(self.omer, None)
+        _,self.des_hoe= self.sift.detectAndCompute(self.hoe, None)
 
 
     def templateMatch(self,frame = cv2.imread('/home/user/botler/catkin_ws/src/template_matcher/script/pics/big_Duvel.png', 1)):
@@ -40,7 +43,7 @@ class TemplateMatcher:
         if (frame is None):
             print("image img is none")
 
-        kpts1, des_frame = self.orb.detectAndCompute(frame, None)
+        kpts1, des_frame = self.sift.detectAndCompute(frame, None)
 
         max=0
         teller=0
@@ -49,12 +52,13 @@ class TemplateMatcher:
         for des in descriptors:
             teller+=1
 
-            matches = self.bf.match(des,des_frame)
+            matches = self.flann.knnMatch(des,des_frame,k=2)
             matches = sorted(matches, key = lambda x:x.distance)
             good=[]
-            #for m,n in matches:
-            #    if m.distance < 0.9*n.distance:
-            #        good.append(m)
+            for m,n in matches:
+                if m.distance < 0.9*n.distance:
+                    good.append(m)
+                    print("works")
 
             print(len(matches),teller)
             MIN_MATCH_COUNT=100
@@ -68,6 +72,6 @@ class TemplateMatcher:
 
         return best_photo_nr, top_left, bottom_right
 
-#t = TemplateMatcher()
-#nr = t.templateMatch()
-#print(nr)
+t = TemplateMatcher()
+nr = t.templateMatch()
+print(nr)

@@ -10,6 +10,7 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 
 from template_matching import TemplateMatcher
+#from test import TemplateMatcher
 
 class LogoFinder:
 	def __init__(self):

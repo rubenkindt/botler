@@ -10,6 +10,7 @@ class TemplateMatcher:
 
         self.akaze = cv2.AKAZE_create()
         self.matcher = cv2.DescriptorMatcher_create(cv2.DescriptorMatcher_BRUTEFORCE_HAMMING)
+
         dir="src/template_matcher/script/pics/"
         self.duvel = cv2.imread(dir+'small_Duvel.png', 1)
         self.omer = cv2.imread(dir+'small_Omer.png', 1)
