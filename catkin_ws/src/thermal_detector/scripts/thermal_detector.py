@@ -33,7 +33,7 @@ class Detector:
             mask = cv2.inRange(img_hsv, lower, upper)
 
             # Get the bottle(s) contours
-            contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+            contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)[-2:]
 
             # If there are any contours (so if there are any cold or hot bottles in the screen)
             if len(contours) != 0:

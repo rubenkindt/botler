@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+
 import cv2
 import copy
 import numpy as np
@@ -13,7 +14,9 @@ class Detector:
                 ]
 
     def detect_color(self, frame):
-	cnt_areas = [0, 0, 0, 0]
+        cnt_areas = [0, 0, 0, 0]
+        x,y,w,h = 0, 0, 0, 0
+
         img = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
         for (lower, upper, color) in self.color_boundries:
@@ -24,7 +27,7 @@ class Detector:
             # find the colors within the specified boundaries and apply the mask
             mask = cv2.inRange(img, lower, upper)
 
-            contours, _ = cv2.findContours(copy.deepcopy(mask), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+            contours, _ = cv2.findContours(copy.deepcopy(mask), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)[-2:]
             if len(contours) != 0:
                 # find the biggest countour (c) by the area
                 c_max = max(contours, key = cv2.contourArea)
