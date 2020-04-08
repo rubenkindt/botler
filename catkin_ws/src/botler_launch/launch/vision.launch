@@ -1,0 +1,5 @@
+<launch>
+  <node name = "usb_cam" pkg = "usb_cam" type = "usb_cam_node" output = "screen" respawn = "true"/>
+  <node name = "thermal_detector" pkg = "thermal_detector" type = "thermal_detector.py" output = "screen" respawn = "true" />
+  <node name = "color_detector" pkg = "color_detect" type = "detect_color.py" output = "screen" respawn = "true" />
+</launch>
