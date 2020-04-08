@@ -7,7 +7,28 @@ import numpy as np
 class TemplateMatcher:
     def __init__(self):
 
-        self.BFmatcher = cv2.BFMatcher(cv2.NORM_L2, crossCheck=True)
+        self.akaze = cv2.AKAZE_create()
+        self.matcher = cv2.DescriptorMatcher_create(cv2.DescriptorMatcher_BRUTEFORCE_HAMMING)
+        dir="src/template_matcher/script/pics/"
+        self.duvel = cv2.imread(dir+'small_Duvel.png', 1)
+        self.omer = cv2.imread(dir+'small_Omer.png', 1)
+        self.hoe = cv2.imread(dir+'small_Hoegaarden.png', 1)
+
+
+        if (self.duvel is None):
+            print("duvel template is none")
+        if (self.omer is None):
+            print("omer template is none")
+        if (self.hoe is None):
+            print("hoe template is none")
+
+        self.duvel=cv2.cvtColor(self.duvel, cv2.COLOR_BGR2GRAY)
+        self.omer=cv2.cvtColor(self.omer, cv2.COLOR_BGR2GRAY)
+        self.hoe=cv2.cvtColor(self.hoe, cv2.COLOR_BGR2GRAY)
+
+        _,self.des_duvel= self.akaze.detectAndCompute(self.duvel, None)
+        _,self.des_omer= self.akaze.detectAndCompute(self.omer, None)
+        _,self.des_hoe= self.akaze.detectAndCompute(self.hoe, None)
 
 
     def templateMatch(self,frame = cv2.imread('/home/user/botler/catkin_ws/src/template_matcher/script/pics/big_Duvel.png', 1)):
@@ -15,53 +36,31 @@ class TemplateMatcher:
         if (frame is None):
             print("image img is none")
 
-        orb = cv2.ORB_create()
-        kp_orb_frame, desciptor_frame = orb.detectAndCompute(frame, None)
-        #des_frame_f32 = np.float32(desciptor_frame)
+        kpts1, des_frame = self.akaze.detectAndCompute(frame, None)
 
-        dir="pics/"
-        duvel = cv2.imread(dir+'small_Duvel.png', 1)
-        omer = cv2.imread(dir+'small_Omer.png', 1)
-        hoe = cv2.imread(dir+'small_Hoegaarden.png', 1)
+        max=0
+        teller=0
+        best_photo_nr=0
+        descriptors=(self.des_duvel,self.des_omer, self.des_hoe)
+        for des in descriptors:
+            teller+=1
 
-        if (duvel is None):
-            print("duvel template is none")
-        if (omer is None):
-            print("omer template is none")
-        if (hoe is None):
-            print("hoe template is none")
+            matches = self.matcher.knnMatch(des_frame,des, 2)
+            #print(matches)
+            good=[]
+            #for m,n in matches:
+            #    if m.distance < 0.9*n.distance:
+            #        good.append(m)
 
-        duvel=cv2.cvtColor(duvel, cv2.COLOR_BGR2GRAY)
-        omer=cv2.cvtColor(omer, cv2.COLOR_BGR2GRAY)
-        hoe=cv2.cvtColor(hoe, cv2.COLOR_BGR2GRAY)
-
-
-
-        kp1, des1 = orb.detectAndCompute(frame,None)
-        kp2, des2 = orb.detectAndCompute(duvel,None)
-
-        index_params = dict(algorithm = 1, trees=5 )
-        search_param = dict(checks = 50)
-        flann = cv2.FlannBasedMatcher(index_params, search_param)
-
-        des1_32 = np.float32(des1)
-        des2_32 = np.float32(des2)
-        matches = flann.knnMatch(des1_32,des2_32,k=2)
-        best_photo_nr=len(matches)
+            MIN_MATCH_COUNT=15
+            if len(matches)>MIN_MATCH_COUNT:
+                if max < len(matches):
+                    max = len(matches)
+                    best_photo_nr=teller
 
         top_left = (50,50)
         bottom_right = (100,100)#(top_left[0] + w, top_left[1] + h)
 
-        # cv2.rectangle(img2,top_left, bottom_right, 255, 2)
-        # plt.subplot(121),plt.imshow(res,cmap = 'gray')
-        # plt.title('Matching Result'), plt.xticks([]), plt.yticks([])
-        # plt.subplot(122),plt.imshow(img2,cmap = 'gray')
-        # plt.title('Detected Point'), plt.xticks([]), plt.yticks([])
-        # plt.suptitle("cv2.TM_CCOEFF")
-        # plt.show()
-        #debug
-        print(best_photo_nr)
-        print(top_left, bottom_right)
         return best_photo_nr, top_left, bottom_right
 
 t = TemplateMatcher()
