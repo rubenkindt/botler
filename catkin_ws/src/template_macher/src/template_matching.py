@@ -3,6 +3,7 @@ import cv2
 import copy
 import numpy as np
 
+
 class TemplateMatcher:
     def __init__(self):
         self.color_boundries = [
@@ -13,28 +14,57 @@ class TemplateMatcher:
                 ]
         self.cnt_areas = [0, 0, 0, 0]
 
-    def templateMatch(	frame = cv2.imread('big_logo.png')):
-    	template = cv2.imread('small_logo.png')
-    	frame=cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
-    	template=cv2.cvtColor(template,cv2.COLOR_BGR2HSV)
+    def templateMatch(self,frame = cv2.imread('dog.png') ):
 
-    	if (frame is None):
-    		print("image img is none")
-    	if ( template is None):
-    		print("image template is none")
-    	img2 = copy.deepcopy(frame)
-    	h, w = template.shape[0:2]
+        duvel = cv2.imread('small_Duvel.png')
+        omer = cv2.imread('small_Omer.png')
+        jupiler = cv2.imread('small_Jupiler.png')
 
-    	res = cv2.matchTemplate(img2,template,cv2.TM_CCOEFF)
-    	min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+        duvel=cv2.cvtColor(duvel,cv2.COLOR_BGR2HSV)
+        omer=cv2.cvtColor(omer,cv2.COLOR_BGR2HSV)
+        jupiler=cv2.cvtColor(omer,cv2.COLOR_BGR2HSV)
 
-    	top_left = max_loc
-    	bottom_right = (top_left[0] + w, top_left[1] + h)
-    	cv2.rectangle(img2,top_left, bottom_right, 255, 2)
-    	plt.subplot(121),plt.imshow(res,cmap = 'gray')
-    	plt.title('Matching Result'), plt.xticks([]), plt.yticks([])
-    	plt.subplot(122),plt.imshow(img2,cmap = 'gray')
-    	plt.title('Detected Point'), plt.xticks([]), plt.yticks([])
-    	plt.suptitle("cv2.TM_CCOEFF")
-    	plt.show()
-        return (top_left, bottom_right)
+        frame=cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
+
+        if (frame is None):
+            print("image img is none")
+        if ( duvel is None):
+            print("duvel template is none")
+        if ( omer is None):
+            print("omer template is none")
+        if ( jupiler is None):
+            print("jupiler template is none")
+        templates=(duvel,omer)
+
+        best_photo_nr=0 #see readme.md
+        max=0
+        teller=0
+        for template in templates:
+            teller += 1
+            img2 = copy.deepcopy(frame)
+            h, w = template.shape[0:2]
+            res = cv2.matchTemplate(img2,template,cv2.TM_CCOEFF)
+            min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+            print('maxValue',max_val)
+            if max < max_val:
+                max = max_val
+                if max_val > 50000000:
+                    best_photo_nr = teller
+
+        #debug
+        '''top_left = max_loc
+        bottom_right = (top_left[0] + w, top_left[1] + h)
+        cv2.rectangle(img2,top_left, bottom_right, 255, 2)
+        plt.subplot(121),plt.imshow(res,cmap = 'gray')
+        plt.title('Matching Result'), plt.xticks([]), plt.yticks([])
+        plt.subplot(122),plt.imshow(img2,cmap = 'gray')
+        plt.title('Detected Point'), plt.xticks([]), plt.yticks([])
+        plt.suptitle("cv2.TM_CCOEFF")
+        plt.show()'''
+        #debug
+
+        return best_photo_nr
+
+t = TemplateMatcher()
+nr = t.templateMatch()
+print(nr)
