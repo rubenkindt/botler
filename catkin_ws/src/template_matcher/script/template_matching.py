@@ -4,27 +4,29 @@ import copy
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 class TemplateMatcher:
     def __init__(self):
-        self.duvel = cv2.imread('pics/small_Duvel.png')
-        self.omer = cv2.imread('pics/small_Omer.png')
-        self.hoe = cv2.imread('pics/small_Hoegaarden.png')
+        self.duvel = cv2.imread('src/template_matcher/script/pics/small_Duvel.png', 1)
+        self.omer = cv2.imread('src/template_matcher/script/pics/small_Omer.png', 1)
+        self.hoe = cv2.imread('src/template_matcher/script/pics/small_Hoegaarden.png', 1)
 
-        self.duvel=cv2.cvtColor(self.duvel,cv2.COLOR_BGR2RGB)
-        self.omer=cv2.cvtColor(self.omer,cv2.COLOR_BGR2RGB)
-        self.hoe=cv2.cvtColor(self.hoe,cv2.COLOR_BGR2RGB)
-    def templateMatch(self,frame = cv2.imread('pics/big_Hoegaarden.png') ):
-        frame=cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
-
-        if (frame is None):
-            print("image img is none")
         if (self.duvel is None):
             print("duvel template is none")
         if (self.omer is None):
             print("omer template is none")
         if (self.hoe is None):
             print("hoe template is none")
+
+        self.duvel=cv2.cvtColor(self.duvel, cv2.COLOR_BGR2RGB)
+        self.omer=cv2.cvtColor(self.omer, cv2.COLOR_BGR2RGB)
+        self.hoe=cv2.cvtColor(self.hoe, cv2.COLOR_BGR2RGB)
+
+    def templateMatch(self,frame):
+        frame=cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+
+        if (frame is None):
+            print("image img is none")
+
         templates=(self.duvel,self.omer,self.hoe)
 
         best_photo_nr=0 #see readme.md

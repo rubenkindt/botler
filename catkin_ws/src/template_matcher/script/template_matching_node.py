@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 import cv2
 import copy
@@ -27,7 +27,7 @@ class LogoFinder:
 		# Detector instance
 		self.template_matcher = TemplateMatcher()
 
-	def callback(image):
+	def callback(self, data):
 		# Try to convert the topic Image to an actual OpenCV image
 		try:
 			cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
