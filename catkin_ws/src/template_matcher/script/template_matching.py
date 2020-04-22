@@ -41,11 +41,9 @@ class TemplateMatcher:
         kpts1, des_frame = self.akaze.detectAndCompute(frame, None)
 
         max=0
-        teller=0
-        best_photo_nr=0
-        descriptors=(self.des_duvel,self.des_omer, self.des_hoe)
-        for des in descriptors:
-            teller+=1
+        best_photo_nr=-1 #-1 is niets gevonden, 0 zou Hoegaarden zijn, 1 is Duvel en 2 is omer
+        descriptors=(self.des_hoe,self.des_duvel,self.des_omer )
+        for teller,des in enumerate(descriptors):
 
             matches = self.matcher.knnMatch(des_frame,des, 2)
             good=[]
@@ -53,12 +51,14 @@ class TemplateMatcher:
             #    if m.distance < 0.9*n.distance:
             #        good.append(m)
 
-            MIN_MATCH_COUNT=200
-            print(len(matches), teller)
+            MIN_MATCH_COUNT=500
+#            print(len(matches), teller)
             if len(matches)>MIN_MATCH_COUNT:
                 if max < len(matches):
                     max = len(matches)
                     best_photo_nr=teller
+        print("aantal maches", "beste foto")
+        print(max, best_photo_nr)
 
         top_left = (50,50)
         bottom_right = (100,100)#(top_left[0] + w, top_left[1] + h)
