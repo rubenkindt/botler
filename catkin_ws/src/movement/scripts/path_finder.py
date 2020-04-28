@@ -3,67 +3,64 @@
 import rospy
 from std_msgs.msg import String
 
-status = 0
-STATUS_TO_SCAN = 1
-STATUS_TO_FRIDGE = 3
-THRESH = 0.5
-SCAN_LOCATION = (10, 20)
-beer = 0
+#Status defines
+STATUS_TO_SCAN = 20
+STATUS_TO_FRIDGE = 40
+STATUS_TO_DROP = 60
+#Location defines
+SCAN_LOCATION = "10;20;0" #x=10, y=20, ori=posX
+DUVEL_LOCATION = ["50;20;180", "50;19;180", "50;18;180"]
+ORVAL_LOCATION = ["50;25;180", "50;26;180"]
+DROP_LOCATION = "10;25;0"
+#Beer defines
 DUVEL = 1
-DUVEL_LOCATION = (50,20)
 ORVAL = 2
-ORVAL_LOCATION = (50,25)
-
-log = 1
+#global variables
+status = 0
+beer = 0
+log = 0
+driveto = 0
+index = 0
 
 def callbackStatus(data):
 	global status
 	status = int(data.data)
+	move()
 
 def callbackBeer(data):
-	global beer
+	global beer, index
 	beer = int(data.data)
+	index = 0 #reset index each time a new beer is detected
+	move()
 
-def callbackLidar(data):
-	global status
-	global beer
-	global log
-	line = data.data.split(";")
-	currentPos = (int(line[0]), int(line[1]))
-
-	message = "StayPut"
-
+def move():
+	global status, beer, log, driveto, index
 	if(status == STATUS_TO_SCAN): #drive to scanning position
-		message = calculateDirection(currentPos, SCAN_LOCATION)
+		message = SCAN_LOCATION
 	elif(status == STATUS_TO_FRIDGE):
-		if(beer == DUVEL) :
-			message = calculateDirection(currentPos, DUVEL_LOCATION)
-		elif(beer == ORVAL) :
-			message = calculateDirection(currentPos, ORVAL_LOCATION)
+		if(beer == DUVEL):
+			message = DUVEL_LOCATION[index]
+			index = (index + 1) % len(DUVEL_LOCATION) 	#move index to next beer for next time
+		elif(beer == ORVAL):							#current beer is not cold enough
+			message = ORVAL_LOCATION[index]
+			index = (index + 1) % len(ORVAL_LOCATION)
+		else:
+			return #No valid beer detected
+	elif(status == STATUS_TO_DROP):
+		message = DROP_LOCATION
+	else:
+		return #In this status, no movement is required
 	log.publish(message)
-
-def calculateDirection(currentPos, targetPos):
-	if(abs(currentPos[0] - targetPos[0]) > THRESH):
-		if(currentPos[0] < targetPos[0]):
-			return "1" #drive to positive x
-		else:
-			return "2" #drive to negative x
-	elif(abs(currentPos[1] - targetPos[1]) > THRESH):
-		if(currentPos[1] < targetPos[1]):
-			return "3" #drive to positive y
-		else:
-			return "4" #drive to negative y
-	else: #reached target pos
-			return "5" #stop driving
+	driveto.publish(message)
 
 def main():
+	global log, driveto
 	rospy.init_node('pathFinder', anonymous=True)
 
 	rospy.Subscriber('status', String, callbackStatus)
 	rospy.Subscriber('image_detection/detection_id', String, callbackBeer)
-	rospy.Subscriber('curPos', String, callbackLidar)
-	global log
 	log = rospy.Publisher("logFile", String, queue_size=10)
+	driveto = rospy.Publisher("driveTo", String, queue_size=10)
 
 	# spin() simply keeps python from exiting until this node is stopped
 	rospy.spin()
