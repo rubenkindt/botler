@@ -10,7 +10,6 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 
 from template_matching import TemplateMatcher
-#from test import TemplateMatcher
 
 class LogoFinder:
 	def __init__(self):
@@ -36,14 +35,11 @@ class LogoFinder:
 			print(e)
 
 		# Use template matching to determine the beer type
-		beer_id, tl, br = self.template_matcher.templateMatch(cv_image)
+		beer_id = self.template_matcher.templateMatch(cv_image)
 
         # Publish the beer_id
 		self.color_pub.publish(str(beer_id))
 
-		if(beer_id != 0):
-			# Draw a bounding box around the logo
-			cv2.rectangle(cv_image, tl, br, (255,255,0), 2)
 
 		# Try to convert the image back to a topic and publish said topic
 		try:
