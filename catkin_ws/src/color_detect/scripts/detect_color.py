@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 from __future__ import print_function
 import cv2
@@ -7,7 +7,6 @@ import numpy as np
 import rospy
 from std_msgs.msg import String
 import roslib
-roslib.load_manifest('image_communication')
 import sys
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
@@ -28,8 +27,8 @@ class Color_detector:
 		self.image_sub = rospy.Subscriber('/usb_cam/image_raw', Image, self.callback)
 
 		# Create publisher to publish bounding boxes
-		self.color_pub = rospy.Publisher('color_detector/detection', String, queue_size=1)
-		self.image_pub = rospy.Publisher("cv_image", Image)
+		self.color_pub = rospy.Publisher('color_detector/det_id', String)
+		self.image_pub = rospy.Publisher("color_detector/cv_image", Image)
 
 		# Detector instance
 		self.detector = Detector()
