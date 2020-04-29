@@ -27,14 +27,16 @@ var master_news = new ROSLIB.Message({
 });
 
 // Publish the values, ordered by the web page buttons.
-function pubMessage() {
-    var order = "";
-
-    // Get the value
-    order = document.getElementById('control_msg').value;
-
+function pub_message(command) {
+	console.log("op een knopje geduwd!")
+    // var order = "";
+    // console.log(order)
+    // // Get the value
+    // order = document.getElementById('control_msg').value;
+    // console.log(order)
+    console.log(command)
     // Set the appropriate values on the message object
-    master_news.data = order;
+    master_news.data = command;
 
     // Publish the message
     controlTopic.publish(master_news);
@@ -84,9 +86,19 @@ speed_listener.subscribe(function(m) {
 // Temperature
 var temperature_listener = new ROSLIB.Topic({
 	ros: ros,
-	name: '/image_detection/temperature_id',
+	name: '/thermal_detector/detection_id',
 	messageType: 'std_msgs/String'
 });
 temperature_listener.subscribe(function(m) {
-	document.getElementById("temperature_msg").innerHTML = m.data;
+	var temp = ""
+	switch(parseInt(m.data)) {
+		case 0:
+			temp = "Warm";
+			break;
+		case 1:
+			temp = "Cold";
+			break;
+	}
+	console.log(temp)
+	document.getElementById("temperature_msg").innerHTML = temp;
 });

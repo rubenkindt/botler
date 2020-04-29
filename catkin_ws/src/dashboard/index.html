@@ -36,9 +36,9 @@
 							<p>What is the BOTler's purpose?<br> <span id="status_msg"></span></p>
 
 							<div class="btn-group btn-group-lg" role="group" aria-label="Control buttons" style="width: 100%">
-								<button type="button" class="btn btn-dark" id="control_msg" onclick="pubMessage()">Start</button>
-								<button type="button" class="btn btn-dark">Return Home</button>
-								<button type="button" class="btn btn-dark">Stop</button>
+								<button type="button" class="btn btn-dark" id="control_msg" onclick="pub_message('start')">Start</button>
+								<button type="button" class="btn btn-dark" id="control_msg" onclick="pub_message('home')">Return Home</button>
+								<button type="button" class="btn btn-dark" id="control_msg" onclick="pub_message('stop')">Stop</button>
 							</div>
 							<p>
 								<div class="card" style="width: 100%;">
@@ -60,7 +60,7 @@
 					<div class="card">
 						<div class="card-body">
 							<h2 class="text-center">Information panel</h2>
-							<img src="http://localhost:8080/stream?topic=/usb_cam/image_raw" alt="Live camera feed">
+							<img src="http://localhost:8080/stream?topic=/gazebo_cam/image_raw" alt="Live camera feed">
 							<p><h5>Parameters</h5></p>
 							<p>Current speed: <span id="speed_msg"></span></p>
 							<p>Current heading: <span id="direction_msg"></span></p>
