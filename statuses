@@ -1,0 +1,30 @@
+List of statuses of the global program and how to move between then
+
+status 0: Idle startup
+
+0 to 10: all modules corectly started
+
+Status 10: Idle wait, ready for opperation
+
+10 to 20: start commando on webinterface
+
+Status 20: Driving to the scan location
+
+20 to 30: Arriving at scan location
+
+Status 30: Scanning the glass
+
+30 to 40: Identifying glass
+
+Status 40: Driving to a possible bottle
+
+40 to 50: Arriving at bottle
+
+Status 50: Checking temperature of bottle
+
+50 to 40: Temperature is too hot
+50 to 60: Temperature is good
+
+Status 60: Drive to dropoff location
+
+60 to 10: Arriving at dropoff location
