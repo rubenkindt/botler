@@ -31,7 +31,7 @@ function pubMessage() {
     var order = "";
 
     // Get the value
-    order = document.getElementById('HIER DIE BUTTON WAARDE NEMEN').value;
+    order = document.getElementById('control_msg').value;
 
     // Set the appropriate values on the message object
     master_news.data = order;
