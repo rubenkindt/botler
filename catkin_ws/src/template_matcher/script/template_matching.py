@@ -11,21 +11,21 @@ class TemplateMatcher:
         self.dectector = cv2.ORB_create(nfeatures=2000)
 
         dir="src/template_matcher/script/pics/"
-        self.kasteel = cv2.imread(dir+'kasteel.png')
-        self.palm = cv2.imread(dir+'palm.png')
-        self.hoe = cv2.imread(dir+'small_Hoegaarden.png')
+        self.duvel = cv2.imread(dir+'big_Duvel.png')
+        self.geuze = cv2.imread(dir+'Geuze.png')
+        self.hoe = cv2.imread(dir+'big_Hoegaarden.png')
         self.karm = cv2.imread(dir+'karmeliet.png')
         self.gust = cv2.imread(dir+'Gust.png')
 
-        self.namen=["kasteel","palm","hoegaarden","karmeliet","gust"]
+        self.namen=["duvel","geuze","hoegaarden","karmeliet","gust"]
 
-        self.model_Features=[self.kasteel, self.palm, self.hoe, self.karm, self.gust]
+        self.model_Features=[self.duvel, self.geuze, self.hoe, self.karm, self.gust]
 
         for teller,img in enumerate(self.model_Features):
             if (img is None):
                 print("foto",str(teller),"is none")
 
-        self.model_Features = [self.getFeatures(self.kasteel),self.getFeatures(self.palm),self.getFeatures(self.hoe),self.getFeatures(self.karm),self.getFeatures(self.gust) ]
+        self.model_Features = [self.getFeatures(self.duvel),self.getFeatures(self.geuze),self.getFeatures(self.hoe),self.getFeatures(self.karm),self.getFeatures(self.gust) ]
         #for img in self.model_Features:
         #    self.model_Features.append(self.getFeatures(img))
 
