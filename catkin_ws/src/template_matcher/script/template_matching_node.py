@@ -21,7 +21,7 @@ class LogoFinder:
 		# Create publisher to publish detection id
 		self.color_pub = rospy.Publisher('template_matcher/detection_id', String, queue_size = 1)
 
-        # Create publisher to publish bounding boxes
+		# Create publisher to publish bounding boxes
 		# self.image_pub = rospy.Publisher('template_matcher/cv_image', Image, queue_size=1)
 
 		# Detector instance
@@ -37,14 +37,14 @@ class LogoFinder:
 		# Use template matching to determine the beer type
 		beer_id = self.template_matcher.templateMatch(cv_image)
 
-        # Publish the beer_id
+		# Publish the beer_id
 		self.color_pub.publish(str(beer_id))
 
 		# Try to convert the image back to a topic and publish said topic
-		try:
-			self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
-		except CvBridgeError as e:
-			print(e)
+		# try:
+		# 	self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
+		# except CvBridgeError as e:
+		# 	print(e)
 
 if __name__ == '__main__':
 	rospy.init_node('logo_detector')

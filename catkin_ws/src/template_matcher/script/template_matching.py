@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 #https://ai-facets.org/robust-logo-detection-with-opencv/
 import cv2
 import copy

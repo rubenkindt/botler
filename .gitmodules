@@ -13,3 +13,6 @@
 [submodule "catkin_ws/src/vision_opencv"]
 	path = catkin_ws/src/vision_opencv
 	url = https://github.com/ros-perception/vision_opencv.git
+[submodule "catkin_ws/src/web_video_server"]
+	path = catkin_ws/src/web_video_server
+	url = https://github.com/RobotWebTools/web_video_server.git
