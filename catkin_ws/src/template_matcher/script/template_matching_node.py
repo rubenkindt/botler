@@ -16,13 +16,13 @@ class LogoFinder:
 		# Create a bridge to transform topics to CV images and back
 		self.bridge = CvBridge()
 		# Subscribe to camera feed
-		self.image_sub = rospy.Subscriber('/usb_cam/image_raw', Image, self.callback)
+		self.image_sub = rospy.Subscriber('/gazebo_cam/image_raw', Image, self.callback)
 
 		# Create publisher to publish detection id
 		self.color_pub = rospy.Publisher('template_matcher/detection_id', String, queue_size = 1)
 
         # Create publisher to publish bounding boxes
-		self.image_pub = rospy.Publisher('template_matcher/cv_image', Image, queue_size=1)
+		# self.image_pub = rospy.Publisher('template_matcher/cv_image', Image, queue_size=1)
 
 		# Detector instance
 		self.template_matcher = TemplateMatcher()
@@ -39,7 +39,6 @@ class LogoFinder:
 
         # Publish the beer_id
 		self.color_pub.publish(str(beer_id))
-
 
 		# Try to convert the image back to a topic and publish said topic
 		try:

@@ -13,7 +13,7 @@ class TemplateMatcher:
         dir="src/template_matcher/script/pics/"
         self.duvel = cv2.imread(dir+'big_Duvel.png')
         self.geuze = cv2.imread(dir+'Geuze.png')
-        self.hoe = cv2.imread(dir+'big_Hoegaarden.png')
+        self.hoe = cv2.imread(dir+'H_gazebo.png')
         self.karm = cv2.imread(dir+'karmeliet.png')
         self.gust = cv2.imread(dir+'Gust.png')
 
@@ -98,7 +98,7 @@ class TemplateMatcher:
                     if max < match:
                         max = match
                         best_photo_nr=teller+1
-        print(best_photo_nr)
+        # print(best_photo_nr)
 
         top_left = (0,0)
         bottom_right = (1,1)#(top_left[0] + w, top_left[1] + h)
