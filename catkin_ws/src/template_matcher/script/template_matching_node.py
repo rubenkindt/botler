@@ -47,7 +47,7 @@ class LogoFinder:
 			print(e)
 
 if __name__ == '__main__':
-	rospy.init_node('template_matcher')
+	rospy.init_node('logo_detector')
 	color = LogoFinder()
 
 	try:
