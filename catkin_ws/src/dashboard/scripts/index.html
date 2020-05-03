@@ -1,0 +1,83 @@
+<html>
+<meta charset="utf-8">
+
+<head>
+	<title>BOTler DASHBOARD</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<script src="https://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+<script src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+<script src="https://static.robotwebtools.org/keyboardteleopjs/current/keyboardteleop.min.js"></script>
+<script src="//yoannmoinet.github.io/nipplejs/javascripts/nipplejs.js"></script>
+<script src="webstream.js"></script>
+
+<body class="d-flex flex-column h-100">
+	<!-- header -->
+	<header class="header">
+		<div class="container">
+			<div class="jumbotron text-center">
+				<h1>BOTler</h1>
+				<p>Welcome to your BOTler command center!</p>
+			</div>
+		</div>
+	</header>
+
+	<!-- main content -->
+	<main>
+		<div class="container">
+			<div class="row">
+				<div class="col-4">
+					<div class="card">
+						<div class="card-body">
+							<h3>Menu</h3>
+
+							<p>What is the BOTler's purpose?<br> <span id="status_msg"></span></p>
+
+							<div class="btn-group btn-group-lg" role="group" aria-label="Control buttons" style="width: 100%">
+								<button type="button" class="btn btn-dark" id="control_msg" onclick="pub_message('start')">Start</button>
+								<button type="button" class="btn btn-dark" id="control_msg" onclick="pub_message('home')">Return Home</button>
+								<button type="button" class="btn btn-dark" id="control_msg" onclick="pub_message('stop')">Stop</button>
+							</div>
+							<p>
+								<div class="card" style="width: 100%;">
+									<div class="card-body">
+										<h5 class="card-title">Beer brand</h5>
+	    								<h6 class="card-subtitle mb-2 text-muted">(Current:) <span id="beerbrand_msg"></span></h6>
+	    								<p class="card-text">Here comes a snapshot of the image feed with a bounding box surrounding the detected glass/bottle.</p>
+										<span id="snapshot_msg"></span>
+										<a href="#" class="card-link">Live detection feed</a>
+	    								<a href="#" class="card-link">History</a>
+									</div>
+								</div>
+							</p>
+
+						</div>
+					</div>
+				</div>
+				<div class="col-8">
+					<div class="card">
+						<div class="card-body">
+							<h2 class="text-center">Information panel</h2>
+							<img src="http://localhost:8080/stream?topic=/gazebo_cam/image_raw" alt="Live camera feed">
+							<p><h5>Parameters</h5></p>
+							<p>Current speed: <span id="speed_msg"></span></p>
+							<p>Current heading: <span id="direction_msg"></span></p>
+							<p>Measured temperature: <span id="temperature_msg"></span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<!-- footer -->
+	<footer class="footer mt-auto bg-dark text-light">
+		<div class="container">
+			<h6>SEE Lab - BOTler</h6>
+		</div>
+	</footer>
+</body>
+
+</html>
