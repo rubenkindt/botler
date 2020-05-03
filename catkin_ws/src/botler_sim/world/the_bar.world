@@ -1,0 +1,154 @@
+<?xml version="1.0" ?>
+
+<sdf version="1.5">
+	<world name="default">
+
+		<!-- export this: export GAZEBO_MODEL_PATH=~/botler/catkin_ws/src/botler_sim/models/:$GAZEBO_MODEL_PATH
+ -->
+
+		<!-- A global light source -->
+		<include>
+			<uri>model://sun</uri>
+			<pose>0 0 0 0 0 0</pose>
+		</include>
+
+		<!-- A ground plane -->
+		<include>
+			<uri>model://ground_plane</uri>
+		</include>
+
+		<include>
+			<uri>model://wall</uri>
+			<name>positive_y_wall</name>
+			<static>true</static>
+			<pose>0 2.1 0.25 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://wall</uri>
+			<name>negative_y_wall</name>
+			<static>true</static>
+			<pose>0 -2.1 0.25 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://wall</uri>
+			<name>positive_x_wall</name>
+			<static>true</static>
+			<pose>2.1 0 0.25 0 0 1.57</pose>
+		</include>
+
+		<include>
+			<uri>model://wall</uri>
+			<name>negative_x_wall</name>
+			<static>true</static>
+			<pose>-2.1 0 0.25 0 0 1.57</pose>
+		</include>
+
+		<include>
+			<uri>model://corner</uri>
+			<name>positive_x_positive_y_corner</name>
+			<static>true</static>
+			<pose>2.1 2.1 0.3 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://corner</uri>
+			<name>positive_x_negative_y_corner</name>
+			<static>true</static>
+			<pose>2.1 -2.1 0.3 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://corner</uri>
+			<name>negative_x_positive_y_corner</name>
+			<static>true</static>
+			<pose>-2.1 2.1 0.3 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://corner</uri>
+			<name>negative_x_negative_y_corner</name>
+			<static>true</static>
+			<pose>-2.1 -2.1 0.3 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://bottles/beersel_blue</uri>
+			<name>test_bottle1_1</name>
+			<static>true</static>
+			<pose>-1.95 1.9 0 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://bottles/beersel_red</uri>
+			<name>test_bottle_2</name>
+			<static>true</static>
+			<pose>-1.65 1.9 0 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://bottles/duvel_blue</uri>
+			<name>test_bottle_3</name>
+			<static>true</static>
+			<pose>-1.05 1.9 0 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://bottles/duvel_red</uri>
+			<name>test_bottle_4</name>
+			<static>true</static>
+			<pose>-0.75 1.9 0 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://bottles/gust_blue</uri>
+			<name>test_bottle_5</name>
+			<static>true</static>
+			<pose>-0.15 1.9 0 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://bottles/gust_red</uri>
+			<name>test_bottle_6</name>
+			<static>true</static>
+			<pose>0.15 1.9 0 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://bottles/hoegaarden_blue</uri>
+			<name>test_bottle_9</name>
+			<static>true</static>
+			<pose>0.75 1.9 0 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://bottles/hoegaarden_red</uri>
+			<name>test_bottle_10</name>
+			<static>true</static>
+			<pose>1.05 1.9 0 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://bottles/karmeliet_blue</uri>
+			<name>test_bottle_7</name>
+			<static>true</static>
+			<pose>1.65 1.9 0 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://bottles/karmeliet_red</uri>
+			<name>test_bottle_8</name>
+			<static>true</static>
+			<pose>1.95 1.9 0 0 0 0</pose>
+		</include>
+
+		<include>
+			<uri>model://beer_glasses</uri>
+			<name>test_glass</name>
+			<static>true</static>
+			<pose>0 -1.8 0 0 0 3.14</pose>
+		</include>
+
+	</world>
+</sdf>
