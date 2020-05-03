@@ -2,3 +2,4 @@ catkin_ws/build/
 catkin_ws/devel/
 **/__pycache__/
 *.pyc 
+catkin_ws/log.txt

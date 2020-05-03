@@ -5,15 +5,11 @@ from std_msgs.msg import String
 
 def talker():
 	#list of topics
-	drive = rospy.Publisher("drive", String, queue_size=10)
-	grabber = rospy.Publisher("grabber", String, queue_size=10)
-	lidar = rospy.Publisher("lidar", String, queue_size=10)
-	camera = rospy.Publisher("camera", String, queue_size=10)
-	ultrasonic = rospy.Publisher("ultrasonic", String, queue_size=10)
 	log = rospy.Publisher("logFile", String, queue_size=10)
 	status = rospy.Publisher("status", String, queue_size=10)
 	detection_id = rospy.Publisher("image_detection/detection_id", String, queue_size=10)
-	curPos = rospy.Publisher("curPos", String, queue_size=10)
+	arrival = rospy.Publisher("arrival", String, queue_size=10)
+	temp = rospy.Publisher("temp", String, queue_size=10)
 
 	rospy.init_node('talker', anonymous=True)
 	while not rospy.is_shutdown():
@@ -22,24 +18,16 @@ def talker():
 
 		if(linesplit[0] == "exit"):
 			break
-		elif(linesplit[0] == "drive"):	#turn left 90, stop, forward, forward 25
-			drive.publish(" ".join(linesplit[1:]))
-		elif(linesplit[0] == "grabber"): #open, close
-			grabber.publish(" ".join(linesplit[1:]))
-		elif(linesplit[0] == "lidar"):	#getposition
-			lidar.publish(" ".join(linesplit[1:]))
-		elif(linesplit[0] == "camera"):	#get color, get glass, get beer
-			camera.publish(" ".join(linesplit[1:]))
-		elif(linesplit[0] == "ultrasonic"):	#get distance
-			ultrasonic.publish(" ".join(linesplit[1:]))
 		elif(linesplit[0] == "log"):
 			log.publish(" ".join(linesplit[1:]))
 		elif(linesplit[0] == "status"):
 			status.publish(" ".join(linesplit[1:]))
 		elif(linesplit[0] == "detection_id"):
 			detection_id.publish(" ".join(linesplit[1:]))
-		elif(linesplit[0] == "curPos"):
-			curPos.publish(" ".join(linesplit[1:]))
+		elif(linesplit[0] == "arrival"):
+			arrival.publish(" ".join(linesplit[1:]))
+		elif(linesplit[0] == "temp"):
+			temp.publish(" ".join(linesplit[1:]))
 			#add more topics
 		else:
 			print(linesplit[0] + " is not a valid topic")
