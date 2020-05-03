@@ -3,7 +3,7 @@
 <sdf version="1.5">
 	<world name="default">
 
-		<!-- export this: export GAZEBO_MODEL_PATH=~/botler/simulation_ws/src/botler_sim/models/:$GAZEBO_MODEL_PATH
+		<!-- export this: export GAZEBO_MODEL_PATH=~/botler/catkin_ws/src/botler_sim/models/:$GAZEBO_MODEL_PATH
  -->
 
 		<!-- A global light source -->
