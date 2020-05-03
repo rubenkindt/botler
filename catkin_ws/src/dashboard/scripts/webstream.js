@@ -56,11 +56,14 @@ status_listener.subscribe(function(m) {
 // Beer brand id
 var brand_listener = new ROSLIB.Topic({
 	ros: ros,
-	name: '/image_detection/brand_id',
+	name: '/template_matcher/detection_id ',
 	messageType: 'std_msgs/String'
 });
 brand_listener.subscribe(function(m) {
-	document.getElementById("beerbrand_msg").innerHTML = m.data;
+  var brand = ""
+  brand = m.data
+	document.getElementById("beerbrand_msg").innerHTML = brand;
+  console.log(brand);
 });
 
 // Direction
@@ -92,11 +95,14 @@ var temperature_listener = new ROSLIB.Topic({
 temperature_listener.subscribe(function(m) {
 	var temp = ""
 	switch(parseInt(m.data)) {
-		case 0:
-			temp = "Warm";
-			break;
+    case 0:
+      temp = "No botlle detected"
+      break;
 		case 1:
 			temp = "Cold";
+			break;
+		case 2:
+			temp = "Warm";
 			break;
 	}
 	console.log(temp)
