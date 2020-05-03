@@ -57,7 +57,7 @@ class Thermal_detector:
 		self.bridge = CvBridge()
 
         # Subscribe to camera feed
-		self.image_sub = rospy.Subscriber('/usb_cam/image_raw', Image, self.callback)
+		self.image_sub = rospy.Subscriber('/gazebo_cam/image_raw', Image, self.callback)
 
 		# Create publisher to publish detection id
 		self.color_pub = rospy.Publisher('thermal_detector/detection_id', String, queue_size = 1)

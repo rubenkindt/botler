@@ -1,31 +1,7 @@
 <launch>
-  <!-- the usb_cam node -->
-	<!--
-  <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
-    <param name="video_device" value="/dev/video0" />
-    <param name="image_width" value="640" />
-    <param name="image_height" value="480" />
-    <param name="pixel_format" value="yuyv" />
-    <param name="camera_frame_id" value="usb_cam" />
-    <param name="io_method" value="mmap"/>
-  </node>
-	-->
-
-  <!-- the thermal detector -->
+    <!-- the thermal detector -->
   <node name = "thermal_detector" pkg = "thermal_detector" type = "thermal_detector.py" output = "screen" respawn = "true" />
 
-  <!-- the color detector -->
-  <node name = "color_detector" pkg = "color_detect" type = "detect_color.py" output = "screen" respawn = "true" />
-
-  <!-- the rosbridge server -->
-	<!-- DIT WORDT NORMAAL OPGESTART MET ROSLAUNCH, COMMANDO BIJ TYPE IN TWIJFEL... -->
-  <node name = "rosbridge_suite" pkg = "rosbridge_suite/rosbridge_server" type = "rosbridge_websocket.launch" output = "screen" respawn = "true" />
-
-  <!-- the live video server -->
-	<!-- DIT WORDT NORMAAL OPGESTART MET ROSRUN, COMMANDO BIJ TYPE IN TWIJFEL... -->
-  <node name = "web_video_server" pkg = "web_video_server" type = "web_video_server" output = "screen" respawn = "true" />
-
-  <!-- the web hosted dashboard -->
-	<!-- DIT IS NOG GEEN CATKIN PACKAGE -->
-  <node name = "dashboard" pkg = "dashboard" type = "server.py" output = "screen" respawn = "true" />
+    <!-- the SIFT detector -->
+  <node name = "logo_detector" pkg = "template_matcher" type = "template_matching_node.py" output = "screen" respawn = "true" />
 </launch>
