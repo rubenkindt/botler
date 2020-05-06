@@ -18,27 +18,38 @@ class LogoFinder:
 		# Subscribe to camera feed
 		self.image_sub = rospy.Subscriber('/gazebo_cam/image_raw', Image, self.callback)
 
+		# Subscribe to status feed
+		self.status_sub = rospy.Subscriber('/master_status', String, self.status_callback)
+
 		# Create publisher to publish detection id
 		self.color_pub = rospy.Publisher('image_detection/beer_id', String, queue_size = 1)
 
+		self.status = False
 		# Detector instance
 		self.logo_matcher = LogoMatcher()
 
 	def callback(self, data):
-		# Try to convert the topic Image to an actual OpenCV image
-		try:
-			cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
-		except CvBridgeError as e:
-			print(e)
+		if(self.status):
+			# Try to convert the topic Image to an actual OpenCV image
+			try:
+				cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
+			except CvBridgeError as e:
+				print(e)
 
-		try:
-			# Use logo matching to determine the beer type
-			beer_id = self.logo_matcher.logoMatch(cv_image)
+			try:
+				# Use logo matching to determine the beer type
+				beer_id = self.logo_matcher.logoMatch(cv_image)
 
-			# Publish the beer_id
-			self.color_pub.publish(str(beer_id))
-		except:
-			pass
+				# Publish the beer_id
+				self.color_pub.publish(str(beer_id))
+			except:
+				pass
+
+	def status_callback(self, data):
+		if(int(data.data) == 30):
+			self.status = True
+		else:
+			self.status = False
 
 if __name__ == '__main__':
 	rospy.init_node('logo_detector')

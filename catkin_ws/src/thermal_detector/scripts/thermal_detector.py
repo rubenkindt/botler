@@ -52,53 +52,64 @@ class Detector:
             return ((0,0,0,0), 0)
 
 class Thermal_detector:
-	def __init__(self):
+    def __init__(self):
         # Create a bridge to transform topics to CV images and back
-		self.bridge = CvBridge()
+        self.bridge = CvBridge()
 
         # Subscribe to camera feed
-		self.image_sub = rospy.Subscriber('/gazebo_cam/image_raw', Image, self.callback)
+        self.image_sub = rospy.Subscriber('/gazebo_cam/image_raw', Image, self.callback)
 
-		# Create publisher to publish detection id
-		self.color_pub = rospy.Publisher('image_detection/thermal_id', String, queue_size = 1)
+        # Subscribe to status feed
+        self.status_sub = rospy.Subscriber('/master_status', String, self.status_callback)
+
+        # Create publisher to publish detection id
+        self.color_pub = rospy.Publisher('image_detection/thermal_id', String, queue_size = 1)
 
         # Create publisher to publish bounding boxes
-		self.image_pub = rospy.Publisher('image_detection/thermal_image', Image, queue_size=1)
+        self.image_pub = rospy.Publisher('image_detection/thermal_image', Image, queue_size=1)
 
-		# Detector instance
-		self.detector = Detector()
+        self.status = False
+        # Detector instance
+        self.detector = Detector()
 
-	def callback(self, data):
-        # Try to convert the topic Image to an actual OpenCV image
-		try:
-			cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
-		except CvBridgeError as e:
-			print(e)
+    def callback(self, data):
+        if(self.status):
+            # Try to convert the topic Image to an actual OpenCV image
+            try:
+                cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
+            except CvBridgeError as e:
+                print(e)
 
-        # Detect the color (temperature) of the bottle in the image and place a bounding box around it.
-		(x,y,w,h), temp_id = self.detector.detect_temp(cv_image)
+            # Detect the color (temperature) of the bottle in the image and place a bounding box around it.
+            (x,y,w,h), temp_id = self.detector.detect_temp(cv_image)
 
-        # Publish the temperature id (0 = hot, 1 = cold)
-		self.color_pub.publish(str(temp_id))
+            # Publish the temperature id (0 = hot, 1 = cold)
+            self.color_pub.publish(str(temp_id))
 
-        # Draw a bounding box around the cold bottle
-		cv2.rectangle(cv_image, (x,y), (x+w,y+h), (255,0,0), 2)
+            # Draw a bounding box around the cold bottle
+            cv2.rectangle(cv_image, (x,y), (x+w,y+h), (255,0,0), 2)
 
-        # Try to convert the image back to a topic and publish said topic
-		try:
-			self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
-		except CvBridgeError as e:
-			print(e)
+            # Try to convert the image back to a topic and publish said topic
+            try:
+                self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
+            except CvBridgeError as e:
+                print(e)
+
+    def status_callback(self, data):
+        if(int(data.data) == 50):
+            self.status = True
+        else:
+            self.status = False
 
 if __name__ == '__main__':
     # Create a ROS node called 'thermal_detector'
-	rospy.init_node('thermal_detector')
+    rospy.init_node('thermal_detector')
 
     # Make an instance of the thermal_detector class
-	temperature = Thermal_detector()
+    temperature = Thermal_detector()
 
     # Keep the node spun up
-	try:
-		rospy.spin()
-	except KeyboardInterrupt:
-		print("Shutting down")
+    try:
+        rospy.spin()
+    except KeyboardInterrupt:
+        print("Shutting down")
