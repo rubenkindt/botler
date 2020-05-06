@@ -21,24 +21,13 @@ var controlTopic = new ROSLIB.Topic({
     messageType : 'std_msgs/String'
 });
 
-// Initalise string message
 var master_news = new ROSLIB.Message({
     data : ""
 });
 
-// Publish the values, ordered by the web page buttons.
 function pub_message(command) {
-	console.log("op een knopje geduwd!")
-    // var order = "";
-    // console.log(order)
-    // // Get the value
-    // order = document.getElementById('control_msg').value;
-    // console.log(order)
     console.log(command)
-    // Set the appropriate values on the message object
     master_news.data = command;
-
-    // Publish the message
     controlTopic.publish(master_news);
 }
 
@@ -50,19 +39,67 @@ var status_listener = new ROSLIB.Topic({
 	messageType: 'std_msgs/String'
 });
 status_listener.subscribe(function(m) {
-	document.getElementById("status_msg").innerHTML = m.data;
+	var status = ""
+	switch(parseInt(m.data)) {
+    case 0:
+     	status = "Currently information available"
+     	break;
+	case 10:
+		status = "Idle wait, ready for opperation";
+		break;
+	case 20:
+		status = "Driving to the bar to scan a beerglass";
+		break;
+	case 30:
+		status = "Scanning the glass";
+		break;
+	case 40:
+		status = "Driving to the fridge in order to fetch the appropriate bottle";
+		break;
+	case 50:
+		status = "Checking the temperature of the bottle";
+		break;
+	case 60:
+		status = "Return to the glass ";
+		break;
+	case 70:
+		status = "Return to the home position";
+		break;
+	}
+	document.getElementById("status_msg").innerHTML = status;
 });
 
 // Beer brand id
-var totaalgeenbier_listener = new ROSLIB.Topic({
+var beer_listener = new ROSLIB.Topic({
 	ros: ros,
-	name: '/drive/test',
+	name: '/image_detection/beer_id',
 	// /image_detection/beer_id
 	messageType: 'std_msgs/String'
 });
-totaalgeenbier_listener.subscribe(function(m) {
+beer_listener.subscribe(function(m) {
 	console.log(m)
-	document.getElementById("beerbrand_msg").innerHTML = m.data;
+	var brand = ""
+	switch(parseInt(m.data)) {
+    case 0:
+     	brand = "No beer detected"
+     	break;
+	case 1:
+		brand = "geen idee";
+		break;
+	case 2:
+		brand = "ook geen idee";
+		break;
+	case 3:
+		brand = "ook geen idee";
+		break;
+	case 4:
+		brand = "ook geen idee";
+		break;
+	case 5:
+		brand = "ook geen idee";
+		break;
+	}
+	document.getElementById("beerbrand_msg").innerHTML = brand;
 });
 
 // Direction
@@ -73,16 +110,6 @@ var heading_listener = new ROSLIB.Topic({
 });
 heading_listener.subscribe(function(m) {
 	document.getElementById("direction_msg").innerHTML = m.data;
-});
-
-// Speed
-var speed_listener = new ROSLIB.Topic({
-	ros: ros,
-	name: '/drive/cmd_vel',
-	messageType: 'std_msgs/String'
-});
-speed_listener.subscribe(function(m) {
-	document.getElementById("speed_msg").innerHTML = m.data;
 });
 
 // Temperature
@@ -97,12 +124,12 @@ temperature_listener.subscribe(function(m) {
     case 0:
       temp = "No bottle detected"
       break;
-		case 1:
-			temp = "Cold";
-			break;
-		case 2:
-			temp = "Warm";
-			break;
+	case 1:
+		temp = "Cold";
+		break;
+	case 2:
+		temp = "Warm";
+		break;
 	}
 	console.log(temp)
 	document.getElementById("temperature_msg").innerHTML = temp;
