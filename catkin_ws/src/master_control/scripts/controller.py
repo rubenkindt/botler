@@ -2,6 +2,7 @@
 
 import rospy
 from std_msgs.msg import String
+from time import sleep
 
 #Status defines
 STATUS_IDLE = 10
@@ -9,7 +10,9 @@ STATUS_TO_SCAN = 20
 STATUS_SCANNING = 30
 STATUS_TO_FRIDGE = 40
 STATUS_TEMPCHECK = 50
+STATUS_PICKING = 55
 STATUS_TO_DROP = 60
+STATUS_DROPPING = 65
 STATUS_TO_IDLE = 70
 
 #global status storage
@@ -26,6 +29,9 @@ def callbackArrive(data): #Robot has arrived at intended location; driving compl
 	elif(status == STATUS_TO_FRIDGE):
 		status = STATUS_TEMPCHECK
 	elif(status == STATUS_TO_DROP):
+		status = STATUS_DROPPING
+		publish()
+		sleep(0.9)
 		status = STATUS_TO_IDLE
 	elif(status == STATUS_TO_IDLE):
 		status = STATUS_IDLE
@@ -35,6 +41,9 @@ def callbackStart(data): #A glass has been identified, drive to a bottle of the 
 	global status #10 start 20 home
 	sig = int(data.data)
 	if(sig == 20):
+		status = STATUS_PICKING
+		publish()
+		sleep(0.9)
 		status = STATUS_TO_IDLE
 	elif(status == STATUS_IDLE and sig == 10):
 		status = STATUS_TO_SCAN
