@@ -62,13 +62,13 @@ def main():
 	global log, publisher
 	rospy.init_node('master_control', anonymous=True)
 
-	rospy.Subscriber('start', String, callbackStart)
-	rospy.Subscriber('arrival', String, callbackArrive)
-	rospy.Subscriber('image_detection/detection_id', String, callbackBeer)
-	rospy.Subscriber('temp', String, callbackTemp)
+	rospy.Subscriber('control_start', String, callbackStart)
+	rospy.Subscriber('movement/status_ok', String, callbackArrive)
+	rospy.Subscriber('image_detection/beer_id', String, callbackBeer)
+	rospy.Subscriber('image_detection/thermal_id', String, callbackTemp)
 	
 	log = rospy.Publisher("logFile", String, queue_size=10)
-	publisher = rospy.Publisher("status", String, queue_size=10)
+	publisher = rospy.Publisher("master_status", String, queue_size=10)
 
 	# spin() simply keeps python from exiting until this node is stopped
 	rospy.spin()

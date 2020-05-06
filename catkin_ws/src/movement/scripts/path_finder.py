@@ -74,12 +74,12 @@ def move():
 
 def main():
 	global log, driveto
-	rospy.init_node('pathFinder', anonymous=True)
+	rospy.init_node('path_finding', anonymous=True)
 
-	rospy.Subscriber('status', String, callbackStatus)
-	rospy.Subscriber('image_detection/detection_id', String, callbackBeer)
+	rospy.Subscriber('master_status', String, callbackStatus)
+	rospy.Subscriber('image_detection/beer_id', String, callbackBeer)
 	log = rospy.Publisher("logFile", String, queue_size=10)
-	driveto = rospy.Publisher("driveTo", String, queue_size=10)
+	driveto = rospy.Publisher("path/driving_destination", String, queue_size=10)
 
 	# spin() simply keeps python from exiting until this node is stopped
 	rospy.spin()
