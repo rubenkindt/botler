@@ -44,13 +44,9 @@ class drive_conversion():
         linear_speed = 1
         angular_speed = 1
 	(goal_x, goal_y, goal_z) = (str(data.data)).split(';')
-	goal_x = int(goal_x)
-	goal_y = int(goal_y)
-	goal_z = int(goal_z)
-        if goal_z > 180 or goal_z < -180:
-            print("you input wrong z range.")
-            self.shutdown()
-        goal_z = np.deg2rad(goal_z)
+	goal_x = float(goal_x)
+	goal_y = float(goal_y)
+	goal_z = float(goal_z)
         goal_distance = sqrt(pow(goal_x - self.position.x, 2) + pow(goal_y - self.position.y, 2))
         distance = goal_distance
 

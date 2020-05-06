@@ -14,7 +14,7 @@ STATUS_TO_DROP = 60
 STATUS_TO_IDLE = 70
 
 #global status storage
-status = 20
+status = 10
 publisher = 0
 
 #debug global
@@ -31,19 +31,19 @@ def callbackArrive(data): #Robot has arrived at intended location; driving compl
 	elif(status == STATUS_TO_IDLE):
 		status = STATUS_IDLE
 	publish()
-	
+
 def callbackStart(data): #A glass has been identified, drive to a bottle of the matching beer brand
 	global status
 	if(status == STATUS_IDLE):
 		status = STATUS_TO_SCAN
 	publish()
-	
+
 def callbackBeer(data): #A glass has been identified, drive to a bottle of the matching beer brand
 	global status
 	if(status == STATUS_SCANNING):
 		status = STATUS_TO_FRIDGE
 	publish()
-	
+
 def callbackTemp(data): #Temperature has been messured, decide on whether to accept it
 	global status
 	if(status == STATUS_TEMPCHECK):
@@ -52,12 +52,12 @@ def callbackTemp(data): #Temperature has been messured, decide on whether to acc
 		else:	#Too hot or failed to messure, try new bottle
 			status = STATUS_TO_FRIDGE
 	publish()
-	
+
 def publish():
 	global status, publisher, log
 	publisher.publish(str(status))
 	log.publish("New status: " + str(status))
-	
+
 def main():
 	global log, publisher
 	rospy.init_node('master_control', anonymous=True)
@@ -66,7 +66,7 @@ def main():
 	rospy.Subscriber('movement/status_ok', String, callbackArrive)
 	rospy.Subscriber('image_detection/beer_id', String, callbackBeer)
 	rospy.Subscriber('image_detection/thermal_id', String, callbackTemp)
-	
+
 	log = rospy.Publisher("logFile", String, queue_size=10)
 	publisher = rospy.Publisher("master_status", String, queue_size=10)
 
