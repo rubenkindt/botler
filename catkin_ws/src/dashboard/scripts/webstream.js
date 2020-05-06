@@ -84,19 +84,19 @@ beer_listener.subscribe(function(m) {
      	brand = "No beer detected"
      	break;
 	case 1:
-		brand = "geen idee";
+		brand = "Duvel";
 		break;
 	case 2:
-		brand = "ook geen idee";
+		brand = "Geuze";
 		break;
 	case 3:
-		brand = "ook geen idee";
+		brand = "Hoegaarden";
 		break;
 	case 4:
-		brand = "ook geen idee";
+		brand = "Karmeliet";
 		break;
 	case 5:
-		brand = "ook geen idee";
+		brand = "Gust";
 		break;
 	}
 	document.getElementById("beerbrand_msg").innerHTML = brand;
