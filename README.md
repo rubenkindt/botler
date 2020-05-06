@@ -1,6 +1,7 @@
 # Botler - a robot butler
 
 ## Installation
+* to be sure everything works, clone the repository in your home directory
 * move into the botler repository (cd botler)
 * move into the catkin workspace (cd catkin_ws)
 * initialise the git modules (git submodules init)
@@ -17,7 +18,21 @@ Now you can build the project
 * catkin_make
 
 ## Execution
-Since we had some troubles using launch files we created a script that will start all the nodes in different terminal tabs (startup.sh).
+Since we had some troubles using launch files for all our nodes we were not able to implement them all.
+To start our botler use the following commands:
+
+* export TURTLEBOT3_MODEL=burger
+* export GAZEBO_MODEL_PATH=~/botler/catkin_ws/src/botler_sim/models/:$GAZEBO_MODEL_PATH
+* roslaunch botler_launch botler.launch     (This will launch gazebo, our vision and our movement nodes)
+
+Unfortunatly we were not able to create a launchfile for the webstream, to start it enter these commands in seperate terminals.
+Don't forget to "source devel/setup.sh" when opening a new terminals
+
+* rosrun web_video_server web_video_server
+* roslaunch rosbridge_server rosbridge_websocket.launch
+* cd src/dashboard/scripts/ and run python -m SimpleHTTPServer
+
+
 In case you don't fully trust us you can find the manual startup squence below.
 
 * go back to the catkin workspace (cd botler/catkin_ws)

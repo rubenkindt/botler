@@ -36,15 +36,15 @@
 							<p>What is the BOTler's purpose?<br> <span id="status_msg"></span></p>
 
 							<div class="btn-group btn-group-lg" role="group" aria-label="Control buttons" style="width: 100%">
-								<button type="button" class="btn btn-dark" id="control_msg" onclick="pub_message('10)">Start</button>
-								<button type="button" class="btn btn-dark" id="control_msg" onclick="pub_message('20)">Return Home</button>
+								<button type="button" class="btn btn-dark" id="control_msg" onclick="pub_message('10')">Start</button>
+								<button type="button" class="btn btn-dark" id="control_msg" onclick="pub_message('20')">Return Home</button>
 							</div>
 							<p>
 								<div class="card" style="width: 100%;">
 									<div class="card-body">
 										<h5 class="card-title">Beer brand</h5>
-	    								<h6 class="card-subtitle mb-2 text-muted"><span id="beerbrand_msg"></span></h6>
-	    								<p class="card-text">Here comes a snapshot of the image feed with a bounding box surrounding the detected glass/bottle.</p>
+	    								<h6 class="card-title mb-2"><span id="beerbrand_msg"></span></h6>
+	    								<p class="card-text"></p>
 										<span id="snapshot_msg"></span>
 										<a href="#" class="card-link">Live detection feed</a>
 	    								<a href="#" class="card-link">History</a>
@@ -61,7 +61,7 @@
 							<h2 class="text-center">Information panel</h2>
 							<img src="http://localhost:8080/stream?topic=/gazebo_cam/image_raw" alt="Live camera feed">
 							<p><h5>Parameters</h5></p>
-							<p>Current speed: <span id="speed_msg"></span></p>
+							<p><span id="speed_msg"></span></p>
 							<p>Current heading: <span id="direction_msg"></span></p>
 							<p>Measured temperature: <span id="temperature_msg"></span></p>
 						</div>

@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find botler_sim)/launch/the_bar.launch" />
+  <include file="$(find botler_launch)/launch/vision.launch" />
+  <include file="$(find botler_launch)/launch/movement.launch" />
+</launch>

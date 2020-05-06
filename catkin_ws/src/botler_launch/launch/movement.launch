@@ -1,0 +1,10 @@
+<launch>
+    <!-- path finder -->
+  <node name = "path_finder" pkg = "movement" type = "path_finder.py" output = "screen" respawn = "true" />
+
+    <!-- the drive conversion -->
+  <node name = "drive_conversion" pkg = "movement" type = "drive_conversion.py" output = "screen" respawn = "true" />
+
+    <!-- the master controller -->
+  <node name = "master_control" pkg = "master_control" type = "controller.py" output = "screen" respawn = "true" />
+</launch>

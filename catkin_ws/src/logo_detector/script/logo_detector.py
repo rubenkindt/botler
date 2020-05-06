@@ -10,12 +10,23 @@ class LogoMatcher:
 
         self.dectector = cv2.ORB_create(nfeatures=2000)
 
-        dir="src/logo_detector/script/pics/"
-        self.duvel = cv2.imread(dir+'big_Duvel.png')
+        dir="../botler/catkin_ws/src/logo_detector/script/pics/"
+        dir_indi="src/logo_detector/script/pics/"
+        self.duvel = cv2.imread(dir+'D_gazebo.png')
+        if (self.duvel is None):
+            self.duvel = cv2.imread(dir_indi+'D_gazebo.png')
         self.geuze = cv2.imread(dir+'Geuze.png')
+        if (self.geuze is None):
+            self.geuze = cv2.imread(dir_indi+'Geuze.png')
         self.hoe = cv2.imread(dir+'H_gazebo.png')
+        if (self.hoe is None):
+            self.hoe = cv2.imread(dir_indi+'H_gazebo.png')
         self.karm = cv2.imread(dir+'K_gazebo.png')
+        if (self.karm is None):
+            self.karm = cv2.imread(dir_indi+'karm.png')
         self.gust = cv2.imread(dir+'Gust.png')
+        if (self.gust is None):
+            self.gust = cv2.imread(dir_indi+'Gust.png')
 
         self.namen=["duvel","geuze","hoegaarden","karmeliet","gust"]
 
