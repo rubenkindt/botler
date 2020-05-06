@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+    <model name="beer_glass_karmeliet">
+        <static>true</static>
+        <link name="link">
+            <collision name="collision">
+                <geometry>
+                    <cylinder>
+                        <radius>0.05</radius>
+                        <length>0.2</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+            <visual name="visual">
+                <geometry>
+                    <mesh>
+                        <uri>model://beer_glasses/karmeliet/meshes/beer_glass.dae</uri>
+                        <scale>1 1 1</scale>
+                    </mesh>
+                </geometry>
+                <material>
+                    <emissive>0.2 0.2 0.2 1</emissive>
+                </material>
+                <transparency>0</transparency>
+            </visual>
+        </link>
+    </model>
+</sdf>

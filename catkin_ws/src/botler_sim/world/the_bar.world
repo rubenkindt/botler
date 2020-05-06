@@ -144,7 +144,7 @@
 		</include>
 
 		<include>
-			<uri>model://beer_glasses</uri>
+			<uri>model://beer_glasses/karmeliet</uri>
 			<name>test_glass</name>
 			<static>true</static>
 			<pose>0 -1.8 0 0 0 3.14</pose>
