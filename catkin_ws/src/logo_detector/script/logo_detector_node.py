@@ -9,7 +9,7 @@ from std_msgs.msg import String
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 
-from template_matching import TemplateMatcher
+from logo_detector import LogoMatcher
 
 class LogoFinder:
 	def __init__(self):
@@ -19,10 +19,10 @@ class LogoFinder:
 		self.image_sub = rospy.Subscriber('/gazebo_cam/image_raw', Image, self.callback)
 
 		# Create publisher to publish detection id
-		self.color_pub = rospy.Publisher('template_matcher/detection_id', String, queue_size = 1)
+		self.color_pub = rospy.Publisher('image_detection/beer_id', String, queue_size = 1)
 
 		# Detector instance
-		self.template_matcher = TemplateMatcher()
+		self.logo_matcher = LogoMatcher()
 
 	def callback(self, data):
 		# Try to convert the topic Image to an actual OpenCV image
@@ -32,8 +32,8 @@ class LogoFinder:
 			print(e)
 
 		try:
-			# Use template matching to determine the beer type
-			beer_id = self.template_matcher.templateMatch(cv_image)
+			# Use logo matching to determine the beer type
+			beer_id = self.logo_matcher.logoMatch(cv_image)
 
 			# Publish the beer_id
 			self.color_pub.publish(str(beer_id))

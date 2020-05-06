@@ -60,10 +60,10 @@ class Thermal_detector:
 		self.image_sub = rospy.Subscriber('/gazebo_cam/image_raw', Image, self.callback)
 
 		# Create publisher to publish detection id
-		self.color_pub = rospy.Publisher('thermal_detector/detection_id', String, queue_size = 1)
+		self.color_pub = rospy.Publisher('image_detection/thermal_id', String, queue_size = 1)
 
         # Create publisher to publish bounding boxes
-		self.image_pub = rospy.Publisher('thermal_detector/cv_image', Image, queue_size=1)
+		self.image_pub = rospy.Publisher('image_detection/thermal_image', Image, queue_size=1)
 
 		# Detector instance
 		self.detector = Detector()

@@ -5,12 +5,12 @@ import copy
 import matplotlib.pyplot as plt
 import numpy as np
 
-class TemplateMatcher:
+class LogoMatcher:
     def __init__(self):
 
         self.dectector = cv2.ORB_create(nfeatures=2000)
 
-        dir="src/template_matcher/script/pics/"
+        dir="src/logo_detector/script/pics/"
         self.duvel = cv2.imread(dir+'big_Duvel.png')
         self.geuze = cv2.imread(dir+'Geuze.png')
         self.hoe = cv2.imread(dir+'H_gazebo.png')
@@ -79,7 +79,7 @@ class TemplateMatcher:
         return None
 
 
-    def templateMatch(self,frame):
+    def logoMatch(self,frame):
         if frame is None:
             return
         img = self.hoe
