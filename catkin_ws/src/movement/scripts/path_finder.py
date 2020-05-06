@@ -7,14 +7,22 @@ from std_msgs.msg import String
 STATUS_TO_SCAN = 20
 STATUS_TO_FRIDGE = 40
 STATUS_TO_DROP = 60
+STATUS_TO_IDLE = 70
 #Location defines
-SCAN_LOCATION = "10;20;0" #x=10, y=20, ori=posX
-DUVEL_LOCATION = ["50;20;180", "50;19;180", "50;18;180"]
-ORVAL_LOCATION = ["50;25;180", "50;26;180"]
-DROP_LOCATION = "10;25;0"
+OUDBEERSEL_LOCATION = 		["-1.9;1.6;1.57", "-1.65;1.6;1.57"]
+DUVEL_LOCATION = 			["-1.05;1.6;1.57", "-0.75;1.6;1.57"]
+GUST_LOCATION = 			["-0.15;1.6;1.57", "0.15;1.6;1.57"]
+HOEGAARDEN_LOCATION = 		["1.05;1.6;1.57", "0.75;1.6;1.57"]
+TRIPELKARMELIET_LOCATION = 	["1.65;1.6;1.57", "1.9;1.6;1.57"]
+SCAN_LOCATION = "0;-1.57;-1.57"
+DROP_LOCATION = "0.5;0;3.14"
+IDLE_LOCATION = "0;0;0"
 #Beer defines
+OUDBEERSEL = 2
 DUVEL = 1
-ORVAL = 2
+GUST = 5
+HOEGAARDEN = 3
+TRIPELKARMELIET = 4
 #global variables
 status = 0
 beer = 0
@@ -41,13 +49,24 @@ def move():
 		if(beer == DUVEL):
 			message = DUVEL_LOCATION[index]
 			index = (index + 1) % len(DUVEL_LOCATION) 	#move index to next beer for next time
-		elif(beer == ORVAL):							#current beer is not cold enough
-			message = ORVAL_LOCATION[index]
-			index = (index + 1) % len(ORVAL_LOCATION)
+		elif(beer == HOEGAARDEN):						#current beer is not cold enough
+			message = HOEGAARDEN_LOCATION[index]
+			index = (index + 1) % len(HOEGAARDEN_LOCATION)
+		elif(beer == OUDBEERSEL):				
+			message = OUDBEERSEL_LOCATION[index]
+			index = (index + 1) % len(OUDBEERSEL_LOCATION)
+		elif(beer == TRIPELKARMELIET)
+			message = TRIPELKARMELIET_LOCATION[index]
+			index = (index + 1) % len(TRIPELKARMELIET_LOCATION)
+		elif(beer == GUST)
+			message = GUST_LOCATION[index]
+			index = (index + 1) % len(GUST_LOCATION)
 		else:
 			return #No valid beer detected
 	elif(status == STATUS_TO_DROP):
 		message = DROP_LOCATION
+	elif(status == STATUS_TO_IDLE):
+		message = IDLE_LOCATION
 	else:
 		return #In this status, no movement is required
 	log.publish(message)
@@ -55,12 +74,12 @@ def move():
 
 def main():
 	global log, driveto
-	rospy.init_node('pathFinder', anonymous=True)
+	rospy.init_node('path_finding', anonymous=True)
 
-	rospy.Subscriber('status', String, callbackStatus)
-	rospy.Subscriber('image_detection/detection_id', String, callbackBeer)
+	rospy.Subscriber('master_status', String, callbackStatus)
+	rospy.Subscriber('image_detection/beer_id', String, callbackBeer)
 	log = rospy.Publisher("logFile", String, queue_size=10)
-	driveto = rospy.Publisher("driveTo", String, queue_size=10)
+	driveto = rospy.Publisher("path/driving_destination", String, queue_size=10)
 
 	# spin() simply keeps python from exiting until this node is stopped
 	rospy.spin()

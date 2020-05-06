@@ -27,4 +27,8 @@ Status 50: Checking temperature of bottle
 
 Status 60: Drive to dropoff location
 
-60 to 10: Arriving at dropoff location
+60 to 70: Arriving at dropoff location
+
+Status 70: Driving to idle position
+
+70 to 10: Arriving at idle location
