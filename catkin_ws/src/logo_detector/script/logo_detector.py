@@ -14,7 +14,7 @@ class LogoMatcher:
         self.duvel = cv2.imread(dir+'big_Duvel.png')
         self.geuze = cv2.imread(dir+'Geuze.png')
         self.hoe = cv2.imread(dir+'H_gazebo.png')
-        self.karm = cv2.imread(dir+'karmeliet.png')
+        self.karm = cv2.imread(dir+'K_gazebo.png')
         self.gust = cv2.imread(dir+'Gust.png')
 
         self.namen=["duvel","geuze","hoegaarden","karmeliet","gust"]

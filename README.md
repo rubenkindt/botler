@@ -17,6 +17,9 @@ Now you can build the project
 * catkin_make
 
 ## Execution
+Since we had some troubles using launch files we created a script that will start all the nodes in different terminal tabs (startup.sh).
+In case you don't fully trust us you can find the manual startup squence below.
+
 * go back to the catkin workspace (cd botler/catkin_ws)
 * source devel/setup.sh
 * choose the turtlebot robot (export TURTLEBOT3_MODEL=burger)
@@ -42,5 +45,5 @@ Now we will start the different nodes, everytime you open a new terminal don't f
 * To start the webserver first navigate to its folder : "cd src/dashboard/scripts/"
 * start the webserver itself : "python -m SimpleHTTPServer"
 
-### Master Controll
+### Master Controller
 * and lastly start the master controll node : "rosrun master_control controller.py"
