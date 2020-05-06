@@ -17,7 +17,7 @@ ros.on('close', function() {
 
 var controlTopic = new ROSLIB.Topic({
     ros : ros,
-    name : '/master_control/control_status',
+    name : '/dashboard/control_start',
     messageType : 'std_msgs/String'
 });
 
@@ -46,7 +46,7 @@ function pub_message(command) {
 // Status
 var status_listener = new ROSLIB.Topic({
 	ros: ros,
-	name: '/master_control/status',
+	name: '/master_status',
 	messageType: 'std_msgs/String'
 });
 status_listener.subscribe(function(m) {
@@ -54,22 +54,21 @@ status_listener.subscribe(function(m) {
 });
 
 // Beer brand id
-var brand_listener = new ROSLIB.Topic({
+var totaalgeenbier_listener = new ROSLIB.Topic({
 	ros: ros,
-	name: '/template_matcher/detection_id ',
+	name: '/drive/test',
+	// /image_detection/beer_id
 	messageType: 'std_msgs/String'
 });
-brand_listener.subscribe(function(m) {
-  var brand = ""
-  brand = m.data
-	document.getElementById("beerbrand_msg").innerHTML = brand;
-  console.log(brand);
+totaalgeenbier_listener.subscribe(function(m) {
+	console.log(m)
+	document.getElementById("beerbrand_msg").innerHTML = m.data;
 });
 
 // Direction
 var heading_listener = new ROSLIB.Topic({
 	ros: ros,
-	name: '/drive/cmd_dir',
+	name: '/path/driving_destination',
 	messageType: 'std_msgs/String'
 });
 heading_listener.subscribe(function(m) {
@@ -89,14 +88,14 @@ speed_listener.subscribe(function(m) {
 // Temperature
 var temperature_listener = new ROSLIB.Topic({
 	ros: ros,
-	name: '/thermal_detector/detection_id',
+	name: '/image_detection/thermal_id',
 	messageType: 'std_msgs/String'
 });
 temperature_listener.subscribe(function(m) {
 	var temp = ""
 	switch(parseInt(m.data)) {
     case 0:
-      temp = "No botlle detected"
+      temp = "No bottle detected"
       break;
 		case 1:
 			temp = "Cold";
