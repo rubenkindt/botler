@@ -102,21 +102,21 @@
     </light>
   </library_lights>
   <library_images>
-    <image id="karmeliet_png" name="karmeliet_png">
-      <init_from>karmeliet.png</init_from>
+    <image id="duvel_png" name="duvel_png">
+      <init_from>duvel.png</init_from>
     </image>
   </library_images>
   <library_effects>
     <effect id="Material_001-effect">
       <profile_COMMON>
-        <newparam sid="karmeliet_png-surface">
+        <newparam sid="duvel_png-surface">
           <surface type="2D">
-            <init_from>karmeliet_png</init_from>
+            <init_from>duvel_png</init_from>
           </surface>
         </newparam>
-        <newparam sid="karmeliet_png-sampler">
+        <newparam sid="duvel_png-sampler">
           <sampler2D>
-            <source>karmeliet_png-surface</source>
+            <source>duvel_png-surface</source>
           </sampler2D>
         </newparam>
         <technique sid="common">
@@ -128,7 +128,7 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <texture texture="karmeliet_png-sampler"/>
+              <texture texture="duvel_png-sampler"/>
             </diffuse>
             <specular>
               <color sid="specular">0.5 0.5 0.5 1</color>
