@@ -32,8 +32,8 @@ Don't forget to "source devel/setup.sh" when opening a new terminals
 * roslaunch rosbridge_server rosbridge_websocket.launch
 * cd src/dashboard/scripts/ and run python -m SimpleHTTPServer
 
-
-In case you don't fully trust us you can find the manual startup squence below.
+## Manual Execution
+In case you don't fully trust us you can find the manual startup sequence below.
 
 * go back to the catkin workspace (cd botler/catkin_ws)
 * source devel/setup.sh
