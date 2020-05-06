@@ -62,7 +62,7 @@ def main():
 	global log, publisher
 	rospy.init_node('master_control', anonymous=True)
 
-	rospy.Subscriber('control_start', String, callbackStart)
+	rospy.Subscriber('dashboard/control_start', String, callbackStart)
 	rospy.Subscriber('movement/status_ok', String, callbackArrive)
 	rospy.Subscriber('image_detection/beer_id', String, callbackBeer)
 	rospy.Subscriber('image_detection/thermal_id', String, callbackTemp)
