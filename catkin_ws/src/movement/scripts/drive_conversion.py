@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 import rospy
 from std_msgs.msg import String
@@ -14,7 +14,7 @@ class drive_conversion():
         rospy.init_node('drive_conversion', anonymous=False)
         rospy.on_shutdown(self.shutdown)
         self.cmd_vel = rospy.Publisher('cmd_vel', Twist, queue_size=5)
-	self.moveDone = rospy.Publisher('movement/status_ok', String, queue_size=5)
+        self.moveDone = rospy.Publisher('movement/status_ok', String, queue_size=5)
         self.sub = rospy.Subscriber('/path/driving_destination', String, self.driveTo)
         self.position = Point()
         self.move_cmd = Twist()
@@ -104,7 +104,7 @@ class drive_conversion():
         rospy.loginfo("Stopping the robot...")
         self.cmd_vel.publish(Twist())
 	self.moveDone.publish("Done")
-    
+
 
 
     def get_odom(self):

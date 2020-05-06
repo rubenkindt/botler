@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 #Kwinten Vanlathem
 import rospy
 from std_msgs.msg import String
@@ -52,13 +52,13 @@ def move():
 		elif(beer == HOEGAARDEN):						#current beer is not cold enough
 			message = HOEGAARDEN_LOCATION[index]
 			index = (index + 1) % len(HOEGAARDEN_LOCATION)
-		elif(beer == OUDBEERSEL):				
+		elif(beer == OUDBEERSEL):
 			message = OUDBEERSEL_LOCATION[index]
 			index = (index + 1) % len(OUDBEERSEL_LOCATION)
-		elif(beer == TRIPELKARMELIET)
+		elif(beer == TRIPELKARMELIET):
 			message = TRIPELKARMELIET_LOCATION[index]
 			index = (index + 1) % len(TRIPELKARMELIET_LOCATION)
-		elif(beer == GUST)
+		elif(beer == GUST):
 			message = GUST_LOCATION[index]
 			index = (index + 1) % len(GUST_LOCATION)
 		else:
