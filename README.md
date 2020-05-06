@@ -39,7 +39,8 @@ Now we will start the different nodes, everytime you open a new terminal don't f
 ### Web Dashboard
 * start the web video server : "rosrun web_video_server web_video_server"
 * start a bridge between the websocket and ros : "roslaunch rosbridge_server rosbridge_websocket.launch"
-* start the webserver itself python -m src/dashboard/scripts/SimpleHTTPServer
+* To start the webserver first navigate to its folder : "cd src/dashboard/scripts/"
+* start the webserver itself : "python -m SimpleHTTPServer"
 
 ### Master Controll
 * and lastly start the master controll node : "rosrun master_control controller.py"
