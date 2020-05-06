@@ -12,6 +12,19 @@
 			<pose>0 0 0 0 0 0</pose>
 		</include>
 
+		<light type="point" name="point">
+      <pose>0 0 1 0 0 0</pose>
+      <diffuse>1 1 1 1</diffuse>
+      <specular>.1 .1 .1 1</specular>
+      <attenuation>
+        <range>20</range>
+        <linear>0.2</linear>
+        <constant>0.8</constant>
+        <quadratic>0.01</quadratic>
+      </attenuation>
+      <cast_shadows>false</cast_shadows>
+    </light>
+
 		<!-- A ground plane -->
 		<include>
 			<uri>model://ground_plane</uri>
@@ -105,14 +118,14 @@
 			<uri>model://bottles/gust_blue</uri>
 			<name>test_bottle_5</name>
 			<static>true</static>
-			<pose>-0.15 1.9 0 0 0 0</pose>
+			<pose>1.65 1.9 0 0 0 0</pose>
 		</include>
 
 		<include>
 			<uri>model://bottles/gust_red</uri>
 			<name>test_bottle_6</name>
 			<static>true</static>
-			<pose>0.15 1.9 0 0 0 0</pose>
+			<pose>1.95 1.9 0 0 0 0</pose>
 		</include>
 
 		<include>
@@ -133,21 +146,25 @@
 			<uri>model://bottles/karmeliet_blue</uri>
 			<name>test_bottle_7</name>
 			<static>true</static>
-			<pose>1.65 1.9 0 0 0 0</pose>
+			<pose>-0.15 1.9 0 0 0 0</pose>
 		</include>
 
 		<include>
 			<uri>model://bottles/karmeliet_red</uri>
 			<name>test_bottle_8</name>
 			<static>true</static>
-			<pose>1.95 1.9 0 0 0 0</pose>
+			<pose>0.15 1.9 0 0 0 0</pose>
 		</include>
 
 		<include>
-			<uri>model://beer_glasses/karmeliet</uri>
+			<uri>model://beer_glasses/hoegaarden</uri>
 			<name>test_glass</name>
 			<static>true</static>
 			<pose>0 -1.8 0 0 0 3.14</pose>
+		</include>
+
+		<include>
+			<uri>model://turtlebot3_burger</uri>
 		</include>
 
 	</world>
