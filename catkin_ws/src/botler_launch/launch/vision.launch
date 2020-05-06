@@ -1,0 +1,7 @@
+<launch>
+    <!-- the thermal detector -->
+  <node name = "thermal_detector" pkg = "thermal_detector" type = "thermal_detector.py" output = "screen" respawn = "true" />
+
+    <!-- the SIFT detector -->
+  <node name = "logo_detector" pkg = "template_matcher" type = "template_matching_node.py" output = "screen" respawn = "true" />
+</launch>
