@@ -1,5 +1,10 @@
 # Botler - a robot butler
 
+## Video demo's
+You can find a couple of video demo's on youtube.
+* The detection of a Duvel glass and immediately retrieving a cold bottle. https://youtu.be/SxhWcpMGnKo
+* The detection of a Hoegaarden glass, it then finds a warm bottle and goes on to the next one. This time the bottle is cold, while returning to deliver the bottle the Botler gets stuck for a little while but frees himself and continues on. https://youtu.be/kjZcUSo2r7g
+
 ## Installation
 * to be sure everything works, clone the repository in your home directory
 * move into the botler repository (cd botler)
